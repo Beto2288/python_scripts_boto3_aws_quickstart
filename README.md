@@ -9,7 +9,7 @@
 import boto3
 ec2 = boto3.resource('ec2')
 for instance in ec2.instances.all():
-    print instance.id, instance.state, instance.instance_type
+    print(instance.id, instance.state, instance.instance_type)
 ```
 
 **Create an instance**
@@ -23,7 +23,7 @@ instance = ec2.create_instances(
     MinCount=1,
     MaxCount=1,
     InstanceType='t2.micro')
-print instance[0].id
+print(instance[0].id)
 ```
 
 **Terminate an instance**
@@ -36,7 +36,7 @@ ec2 = boto3.resource('ec2')
 for instance_id in sys.argv[1:]:
     instance = ec2.Instance(instance_id)
     response = instance.terminate()
-    print response
+    print(response)
 ```
 
 **Checking status of the instance**
@@ -46,7 +46,7 @@ for instance_id in sys.argv[1:]:
 import boto3
 ec2 = boto3.resource('ec2')
 for instance in ec2.instances.all():
-    print instance.id, instance.state, instance.instance_type
+    print(instance.id, instance.state, instance.instance_type)
 ```
 
 **Create S3 bucket**
@@ -59,9 +59,9 @@ s3 = boto3.resource("s3")
 for bucket_name in sys.argv[1:]:
     try:
         response = s3.create_bucket(Bucket=bucket_name)
-        print response
+        print(response)
     except Exception as error:
-        print error
+        print(error)
 ```
 
 **Create an instance, create a file with information of the instance and put it on the S3 bucket created**
@@ -90,14 +90,14 @@ for instance in instances:
     file.write(ID_instance +" "+ DNS_instance +" "+ IP_instance + os.linesep)
     file.write("TEXTO....")
     file.close()
-print((instance.id, instance.state, instance.public_dns_name,instance.public_ip_address))
+print((instance.id, instance.state, instance.public_dns_name, instance.public_ip_address,))
 
 s3 = boto3.resource('s3')
 bucket_name = sys.argv[1]
 object_name = 'name_of_your_file.txt'
 try:
     response = s3.Object(bucket_name, object_name).put(Body=open(object_name, 'rb'))
-    print response
+    print(response)
 except Exception as error:
-    print error
+    print(error)
 ```
